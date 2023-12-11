@@ -29,3 +29,7 @@ Dummy data used for visualization is inside `data.json`.
 ## Build
 
 `npm run build`
+
+## Example 
+
+![This is a gif of the desired outcome. A line graph on the left, a pie and a text updating as the graph progresses on the right.](./example.gif)
