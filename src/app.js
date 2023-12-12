@@ -88,7 +88,7 @@ function chart(index) {
   // // Declare the line generator.
   // const fiftyPSell = d3.line()
   //     .x(d => x(formatDate(d.date)))
-  //     .y(d => y(d['50_p_sell_price']))
+  //     .y(d => y(d['50p_sell_price']))
 
   // // Append a path for the fiftyPSell line.
   // svg.append("path")
@@ -104,7 +104,7 @@ function chart(index) {
   // Declare the line generator.
   // const fiftyPBuy = d3.line()
   //     .x(d => x(formatDate(d.date)))
-  //     .y(d => y(d['50_p_buy_price_2']))
+  //     .y(d => y(d['50p_buy_price']))
 
   // // Append a path for the fiftyPSell line.
   // svg.append("path")
@@ -117,10 +117,10 @@ function chart(index) {
    * Draw current lower line
    */
   // Setting x range for lower line
-  // This is a tricky bit, that will always return the current 50_p_sell_price as y value
+  // This is a tricky bit, that will always return the current 50p_sell_price as y value
   const lowerLine = d3.line()
     .x(d => x(formatDate(d.date)))
-    .y(() => y(DATA_UNTIL_INDEX[DATA_UNTIL_INDEX.length - 1]['50_p_sell_price']))
+    .y(() => y(DATA_UNTIL_INDEX[DATA_UNTIL_INDEX.length - 1]['50p_sell_price']))
 
   svg.append("path")
     .attr("fill", "none")
@@ -132,10 +132,10 @@ function chart(index) {
    * Draw current upper line
    */
   // Setting x range for lower line
-  // This is a tricky bit, that will always return the current 50_p_buy_price_2 as y value
+  // This is a tricky bit, that will always return the current 50p_buy_price as y value
   const upperLine = d3.line()
     .x(d => x(formatDate(d.date)))
-    .y(() => y(DATA_UNTIL_INDEX[DATA_UNTIL_INDEX.length - 1]['50_p_buy_price_2']))
+    .y(() => y(DATA_UNTIL_INDEX[DATA_UNTIL_INDEX.length - 1]['50p_buy_price']))
 
   svg.append("path")
     .attr("fill", "none")
@@ -199,14 +199,14 @@ anime({
   round: 1,
   easing: 'linear',
   // Feel free to modify, but beware, the pie chart might stagger a bit
-  duration: 50000,
+  duration: 30000,
   update() {
     // Render chart until x index
     chart(MOVING_INDEX.x)
 
-    // Here we calculate a percentage of assets depending on the market price value position between 50_p_sell_price & 50_p_buy_price_2
-    const diffBetween50pSell50pBuy =  FULL_DATA[MOVING_INDEX.x]['50_p_buy_price_2'] - FULL_DATA[MOVING_INDEX.x]['50_p_sell_price']
-    const percentAsset1 = (FULL_DATA[MOVING_INDEX.x].market_price - FULL_DATA[MOVING_INDEX.x]['50_p_sell_price']) / diffBetween50pSell50pBuy
+    // Here we calculate a percentage of assets depending on the market price value position between 50p_sell_price & 50p_buy_price
+    const diffBetween50pSell50pBuy =  FULL_DATA[MOVING_INDEX.x]['50p_buy_price'] - FULL_DATA[MOVING_INDEX.x]['50p_sell_price']
+    const percentAsset1 = (FULL_DATA[MOVING_INDEX.x].market_price - FULL_DATA[MOVING_INDEX.x]['50p_sell_price']) / diffBetween50pSell50pBuy
     const percentAsset2 = 1 - percentAsset1
 
     pie([
@@ -218,10 +218,10 @@ anime({
     /**
      * Logic to add fees each time we hit a price level
      */
-    if (FULL_DATA[MOVING_INDEX.x].market_price === FULL_DATA[MOVING_INDEX.x]['50_p_buy_price_2']) {
+    if (FULL_DATA[MOVING_INDEX.x].market_price === FULL_DATA[MOVING_INDEX.x]['50p_buy_price']) {
       fees += 1
     }
-    if (FULL_DATA[MOVING_INDEX.x].market_price === FULL_DATA[MOVING_INDEX.x]["50_p_sell_price"]) {
+    if (FULL_DATA[MOVING_INDEX.x].market_price === FULL_DATA[MOVING_INDEX.x]["50p_sell_price"]) {
       fees += 1
     }
     // Render fees
