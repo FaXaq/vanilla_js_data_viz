@@ -209,9 +209,11 @@ anime({
     const percentAsset1 = (FULL_DATA[MOVING_INDEX.x].market_price - FULL_DATA[MOVING_INDEX.x]['50p_sell_price']) / diffBetween50pSell50pBuy
     const percentAsset2 = 1 - percentAsset1
 
+    // Each arc has a 30% value min, so the remaining asset value is only counting for the remaining total 40%
+    // Hence the percentage value multiplier of 40
     pie([
-      { name: 'percentAsset1', value: percentAsset1 * 100 },
-      { name: 'percentAsset2', value: percentAsset2 * 100 }
+      { name: 'percentAsset1', value: 30 + (percentAsset1 * 40)},
+      { name: 'percentAsset2', value: 30 + (percentAsset2 * 40)}
     ])
 
 
